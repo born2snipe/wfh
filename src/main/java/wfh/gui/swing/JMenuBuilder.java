@@ -16,6 +16,7 @@ import java.util.UUID;
 
 public class JMenuBuilder {
     private static final String LNF_BUTTON_GROUP = UUID.randomUUID().toString();
+    private static final String STATUS_BUTTON_GROUP = UUID.randomUUID().toString();
     private final JMenu menu;
     private final Map<String, ButtonGroup> nameToButtonGroup = new HashMap<>();
 
@@ -62,7 +63,7 @@ public class JMenuBuilder {
     }
 
     public JMenuBuilder addStatusItems(List<StatusAction> actions) {
-        actions.forEach(this::addItem);
+        actions.forEach((action) -> addToButtonGroup(STATUS_BUTTON_GROUP, new JRadioButtonMenuItem(action)));
         return this;
     }
 }
