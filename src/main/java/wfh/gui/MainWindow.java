@@ -16,7 +16,7 @@ import java.awt.Color;
 import java.awt.HeadlessException;
 import java.util.List;
 
-import static wfh.status.CannedActions.*;
+import static wfh.status.Statuses.*;
 
 @Component
 public class MainWindow extends JFrame {

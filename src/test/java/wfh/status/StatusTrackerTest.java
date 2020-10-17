@@ -12,7 +12,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static wfh.status.CannedActions.DONE_FOR_THE_DAY;
+import static wfh.status.Statuses.DONE_FOR_THE_DAY;
 
 @ExtendWith(MockitoExtension.class)
 class StatusTrackerTest {

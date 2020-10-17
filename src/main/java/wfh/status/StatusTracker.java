@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-import static wfh.status.CannedActions.DONE_FOR_THE_DAY;
+import static wfh.status.Statuses.DONE_FOR_THE_DAY;
 
 @Component
 public class StatusTracker {

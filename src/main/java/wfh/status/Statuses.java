@@ -1,6 +1,6 @@
 package wfh.status;
 
-public enum CannedActions {
+public enum Statuses {
     WORKING,
     AFK,
     LUNCH,

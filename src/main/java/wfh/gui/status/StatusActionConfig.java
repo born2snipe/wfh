@@ -6,7 +6,7 @@ import org.springframework.core.env.Environment;
 import wfh.settings.SettingsRepository;
 import wfh.status.StatusTracker;
 
-import static wfh.status.CannedActions.*;
+import static wfh.status.Statuses.*;
 
 @Configuration
 public class StatusActionConfig {
