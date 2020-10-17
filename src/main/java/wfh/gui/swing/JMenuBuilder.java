@@ -1,13 +1,17 @@
 package wfh.gui.swing;
 
 import wfh.gui.lnf.ChangeLookAndFeelAction;
+import wfh.gui.status.StatusAction;
 import wfh.settings.SettingsRepository;
 
+import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,13 +45,25 @@ public class JMenuBuilder {
             nameToButtonGroup.put(buttonGroupName, new ButtonGroup());
         }
         nameToButtonGroup.get(buttonGroupName).add(item);
+        return addItem(item);
+    }
 
+    public JMenuBuilder addItem(Action action) {
+        return addItem(new JMenuItem(action));
+    }
+
+    public JMenuBuilder addItem(JMenuItem item) {
         menu.add(item);
         return this;
     }
 
     public JMenuBuilder addSeparator() {
         menu.addSeparator();
+        return this;
+    }
+
+    public JMenuBuilder addStatusItems(List<StatusAction> actions) {
+        actions.forEach(this::addItem);
         return this;
     }
 }
