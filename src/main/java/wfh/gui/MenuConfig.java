@@ -11,7 +11,6 @@ import wfh.settings.SettingsRepository;
 import wfh.status.StatusTracker;
 
 import javax.swing.JMenu;
-import java.util.List;
 
 import static wfh.gui.swing.JMenuBuilder.newMenu;
 
@@ -22,11 +21,19 @@ public class MenuConfig {
     @Bean
     public JMenu statusActions(
             @Value("${status.menu.title}") String menuTitle,
-            @Qualifier("cannedStatusActions") List<StatusAction> cannedActions,
+            @Qualifier("afkAction") StatusAction afkAction,
+            @Qualifier("lunchAction") StatusAction lunchAction,
+            @Qualifier("workingAction") StatusAction workingAction,
+            @Qualifier("doneForTheDayAction") StatusAction doneForTheDayAction,
             StatusTracker statusTracker
     ) {
         JMenuBuilder builder = newMenu(menuTitle)
-                .addStatusItems(cannedActions, statusTracker);
+                .addStatusItem(workingAction, statusTracker)
+                .addSeparator()
+                .addStatusItem(afkAction, statusTracker)
+                .addStatusItem(lunchAction, statusTracker)
+                .addSeparator()
+                .addStatusItem(doneForTheDayAction, statusTracker);
 
         return builder.build();
     }
