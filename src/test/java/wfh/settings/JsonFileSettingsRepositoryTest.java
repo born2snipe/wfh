@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.is;
@@ -52,6 +53,19 @@ class JsonFileSettingsRepositoryTest {
 
         assertThat(FlatIntelliJLaf.class, is(repo.findLookAndFeel()));
         assertThat(false, is((boolean) readFileProperty(settings, "useDarkTheme")));
+    }
+
+    @Test
+    public void awt_color_is_NOT_saved_to_disk(@TempDir File temp) {
+        File settings = new File(temp, ".wfh/settings.json");
+
+        JsonFileSettingsRepository repo = new JsonFileSettingsRepository(temp);
+        repo.init();
+
+        repo.saveToUseDarkTheme(false);
+
+        Map<String, String> statusSettings = readFileProperty(settings, "work");
+        assertThat(statusSettings.containsKey("awtColor"), is(false));
     }
 
     @Test

@@ -1,5 +1,7 @@
 package wfh.settings;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.awt.Color;
 
 public class StatusSetting {
@@ -13,6 +15,7 @@ public class StatusSetting {
         this.color = color;
     }
 
+    @JsonIgnore
     public Color getAwtColor() {
         return Color.decode(color);
     }
