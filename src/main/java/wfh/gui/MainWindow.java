@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
         menus.forEach(menuBar::add);
         setJMenuBar(menuBar);
 
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(640, 480);
         setLocationByPlatform(true);
     }
