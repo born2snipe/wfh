@@ -23,15 +23,10 @@ public class MenuConfig {
     public JMenu statusActions(
             @Value("${status.menu.title}") String menuTitle,
             @Qualifier("cannedStatusActions") List<StatusAction> cannedActions,
-            @Qualifier("customStatusActions") List<StatusAction> customActions,
             StatusTracker statusTracker
     ) {
         JMenuBuilder builder = newMenu(menuTitle)
                 .addStatusItems(cannedActions, statusTracker);
-
-        if (customActions.size() > 0) {
-            builder.addSeparator().addStatusItems(customActions, statusTracker);
-        }
 
         return builder.build();
     }

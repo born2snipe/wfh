@@ -64,11 +64,14 @@ public class JMenuBuilder {
     }
 
     public JMenuBuilder addStatusItems(List<StatusAction> actions, StatusTracker statusTracker) {
-        actions.forEach((action) -> {
-            JRadioButtonMenuItem item = new JRadioButtonMenuItem(action);
-            item.setSelected(statusTracker.getCurrentStatus().equals(action.getName()));
-            addToButtonGroup(STATUS_BUTTON_GROUP, item);
-        });
+        actions.forEach((action) -> addStatusItem(action, statusTracker));
+        return this;
+    }
+
+    public JMenuBuilder addStatusItem(StatusAction action, StatusTracker statusTracker) {
+        JRadioButtonMenuItem item = new JRadioButtonMenuItem(action);
+        item.setSelected(statusTracker.getCurrentStatus().equals(action.getName()));
+        addToButtonGroup(STATUS_BUTTON_GROUP, item);
         return this;
     }
 }

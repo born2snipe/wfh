@@ -8,7 +8,6 @@ import wfh.status.CannedActions;
 import wfh.status.StatusTracker;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -26,10 +25,5 @@ public class StatusActionConfig {
         }
 
         return actions;
-    }
-
-    @Bean
-    public List<StatusAction> customStatusActions() {
-        return Collections.emptyList();
     }
 }
