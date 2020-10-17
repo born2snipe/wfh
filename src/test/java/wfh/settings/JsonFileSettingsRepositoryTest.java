@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,8 +16,31 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static wfh.settings.Checksumer.md5;
+import static wfh.status.CannedActions.*;
 
 class JsonFileSettingsRepositoryTest {
+    @Test
+    public void default_colors_bad_color(@TempDir File temp) {
+        writeSettingFile(temp, "{}");
+
+        JsonFileSettingsRepository repo = new JsonFileSettingsRepository(temp);
+        repo.init();
+
+        assertThat(repo.findStatusColorFor(AFK), is(Color.YELLOW.darker()));
+        assertThat(repo.findStatusColorFor(LUNCH), is(Color.GREEN.darker()));
+        assertThat(repo.findStatusColorFor(BACK_TO_WORK), is(Color.RED));
+    }
+
+    @Test
+    public void default_colors_in_settings_file(@TempDir File temp) {
+        JsonFileSettingsRepository repo = new JsonFileSettingsRepository(temp);
+        repo.init();
+
+        assertThat(repo.findStatusColorFor(AFK), is(Color.YELLOW.darker()));
+        assertThat(repo.findStatusColorFor(LUNCH), is(Color.GREEN.darker()));
+        assertThat(repo.findStatusColorFor(BACK_TO_WORK), is(Color.RED));
+    }
+
     @Test
     public void update_look_and_feel(@TempDir File temp) {
         File settings = new File(temp, ".wfh/settings.json");

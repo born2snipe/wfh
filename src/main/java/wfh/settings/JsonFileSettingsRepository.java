@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import wfh.status.CannedActions;
 
 import javax.annotation.PostConstruct;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,6 +46,19 @@ public class JsonFileSettingsRepository implements SettingsRepository {
     @Override
     public Optional<String> findHotKeyFor(CannedActions cannedAction) {
         return Optional.empty();
+    }
+
+    @Override
+    public Color findStatusColorFor(CannedActions action) {
+        switch (action) {
+            case AFK:
+                return safelyGetColorFor(currentSettings.getAfk(), Color.YELLOW.darker());
+            case BACK_TO_WORK:
+                return safelyGetColorFor(currentSettings.getWork(), Color.RED);
+            case LUNCH:
+                return safelyGetColorFor(currentSettings.getLunch(), Color.GREEN.darker());
+        }
+        return Color.WHITE;
     }
 
     @PostConstruct
@@ -90,5 +104,12 @@ public class JsonFileSettingsRepository implements SettingsRepository {
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    private Color safelyGetColorFor(StatusSetting setting, Color defaultColor) {
+        return Optional.ofNullable(setting)
+                .map(StatusSetting::getColor)
+                .map(Color::decode)
+                .orElse(defaultColor);
     }
 }

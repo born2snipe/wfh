@@ -1,3 +1,12 @@
 {
-  "lookAndFeelClassName": "com.formdev.flatlaf.FlatDarculaLaf"
+  "lookAndFeelClassName": "com.formdev.flatlaf.FlatDarculaLaf",
+  "afk": {
+    "color": "#B2B200"
+  },
+  "lunch": {
+    "color": "#00B200"
+  },
+  "work": {
+    "color": "#FF0000"
+  }
 }

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import wfh.gui.status.StatusTimerPanel;
-import wfh.status.CannedActions;
+import wfh.settings.SettingsRepository;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -16,6 +16,8 @@ import java.awt.Color;
 import java.awt.HeadlessException;
 import java.util.List;
 
+import static wfh.status.CannedActions.*;
+
 @Component
 public class MainWindow extends JFrame {
     private final StatusTimerPanel afk;
@@ -24,16 +26,20 @@ public class MainWindow extends JFrame {
 
     private final long start = System.currentTimeMillis();
 
-    public MainWindow(@Value("${app.title}") String title, List<JMenu> menus) throws HeadlessException {
+    public MainWindow(@Value("${app.title}") String title, List<JMenu> menus, SettingsRepository settingsRepository) throws HeadlessException {
         super(title);
 
         JMenuBar menuBar = new JMenuBar();
         menus.forEach(menuBar::add);
         setJMenuBar(menuBar);
 
-        afk = new StatusTimerPanel(CannedActions.AFK, 32f, Color.RED);
-        lunch = new StatusTimerPanel(CannedActions.LUNCH, 32f, Color.RED);
-        work = new StatusTimerPanel(CannedActions.BACK_TO_WORK, 64f, Color.GREEN.darker());
+        Color afkColor = settingsRepository.findStatusColorFor(AFK);
+        Color lunchColor = settingsRepository.findStatusColorFor(LUNCH);
+        Color workColor = settingsRepository.findStatusColorFor(BACK_TO_WORK);
+
+        afk = new StatusTimerPanel(AFK, 32f, afkColor);
+        lunch = new StatusTimerPanel(LUNCH, 32f, lunchColor);
+        work = new StatusTimerPanel(BACK_TO_WORK, 64f, workColor);
 
         JPanel panel = FormBuilder.create()
                 .columns("p:grow, 5dlu, p:grow")
