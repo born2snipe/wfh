@@ -9,7 +9,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.UIManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,7 @@ public class JMenuBuilder {
 
     public JMenuBuilder addChangeLookAndFeelItem(Class lookAndFeelClass, SettingsRepository settingsRepository) {
         JRadioButtonMenuItem item = new JRadioButtonMenuItem(lookAndFeelClass.getSimpleName());
-        item.setSelected(UIManager.getLookAndFeel().getClass().equals(lookAndFeelClass));
+        item.setSelected(settingsRepository.findLookAndFeel().equals(lookAndFeelClass));
         item.addActionListener(new ChangeLookAndFeelAction(lookAndFeelClass, settingsRepository));
         return addToButtonGroup(LNF_BUTTON_GROUP, item);
     }
