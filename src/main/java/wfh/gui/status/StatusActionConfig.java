@@ -33,9 +33,9 @@ public class StatusActionConfig {
     @Bean
     public StatusAction workingAction(SettingsRepository settingsRepository, Environment env, StatusTracker statusTracker) {
         return new StatusAction(
-                BACK_TO_WORK.name(),
-                env.getProperty("status.item.BACK_TO_WORK"),
-                settingsRepository.findHotKeyFor(BACK_TO_WORK),
+                WORKING.name(),
+                env.getProperty("status.item.WORKING"),
+                settingsRepository.findHotKeyFor(WORKING),
                 statusTracker
         );
     }

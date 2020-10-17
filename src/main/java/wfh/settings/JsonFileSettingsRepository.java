@@ -46,8 +46,8 @@ public class JsonFileSettingsRepository implements SettingsRepository {
         switch (action) {
             case AFK:
                 return safelyGetColorFor(currentSettings.getAfk(), Color.YELLOW.darker());
-            case BACK_TO_WORK:
-                return safelyGetColorFor(currentSettings.getWork(), Color.RED);
+            case WORKING:
+                return safelyGetColorFor(currentSettings.getWorking(), Color.RED);
             case LUNCH:
                 return safelyGetColorFor(currentSettings.getLunch(), Color.GREEN.darker());
         }
@@ -99,14 +99,6 @@ public class JsonFileSettingsRepository implements SettingsRepository {
             logger.info("Wrote default settings to disk: " + settingsFile);
         } catch (IOException e) {
             logger.error("Failed to write default settings to disk", e);
-        }
-    }
-
-    private Class loadClass(String className) {
-        try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            return null;
         }
     }
 

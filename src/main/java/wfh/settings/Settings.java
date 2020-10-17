@@ -4,7 +4,7 @@ public class Settings {
     private boolean useDarkTheme = true;
     private StatusSetting afk;
     private StatusSetting lunch;
-    private StatusSetting work;
+    private StatusSetting working;
 
     public boolean isUseDarkTheme() {
         return useDarkTheme;
@@ -30,11 +30,11 @@ public class Settings {
         this.lunch = lunch;
     }
 
-    public StatusSetting getWork() {
-        return work;
+    public StatusSetting getWorking() {
+        return working;
     }
 
-    public void setWork(StatusSetting work) {
-        this.work = work;
+    public void setWorking(StatusSetting working) {
+        this.working = working;
     }
 }

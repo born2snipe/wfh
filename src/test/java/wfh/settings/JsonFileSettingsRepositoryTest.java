@@ -29,7 +29,7 @@ class JsonFileSettingsRepositoryTest {
 
         assertThat(repo.findStatusColorFor(AFK), is(Color.YELLOW.darker()));
         assertThat(repo.findStatusColorFor(LUNCH), is(Color.GREEN.darker()));
-        assertThat(repo.findStatusColorFor(BACK_TO_WORK), is(Color.RED));
+        assertThat(repo.findStatusColorFor(WORKING), is(Color.RED));
     }
 
     @Test
@@ -39,7 +39,7 @@ class JsonFileSettingsRepositoryTest {
 
         assertThat(repo.findStatusColorFor(AFK), is(Color.YELLOW.darker()));
         assertThat(repo.findStatusColorFor(LUNCH), is(Color.GREEN.darker()));
-        assertThat(repo.findStatusColorFor(BACK_TO_WORK), is(Color.RED));
+        assertThat(repo.findStatusColorFor(WORKING), is(Color.RED));
     }
 
     @Test
@@ -64,7 +64,7 @@ class JsonFileSettingsRepositoryTest {
 
         repo.saveToUseDarkTheme(false);
 
-        Map<String, String> statusSettings = readFileProperty(settings, "work");
+        Map<String, String> statusSettings = readFileProperty(settings, "working");
         assertThat(statusSettings.containsKey("awtColor"), is(false));
     }
 

@@ -1,7 +1,7 @@
 package wfh.status;
 
 public enum CannedActions {
-    BACK_TO_WORK,
+    WORKING,
     AFK,
     LUNCH,
     DONE_FOR_THE_DAY

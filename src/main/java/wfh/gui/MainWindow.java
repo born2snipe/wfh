@@ -35,11 +35,11 @@ public class MainWindow extends JFrame {
 
         Color afkColor = settingsRepository.findStatusColorFor(AFK);
         Color lunchColor = settingsRepository.findStatusColorFor(LUNCH);
-        Color workColor = settingsRepository.findStatusColorFor(BACK_TO_WORK);
+        Color workColor = settingsRepository.findStatusColorFor(WORKING);
 
         afk = new StatusTimerPanel(AFK, 32f, afkColor);
         lunch = new StatusTimerPanel(LUNCH, 32f, lunchColor);
-        work = new StatusTimerPanel(BACK_TO_WORK, 64f, workColor);
+        work = new StatusTimerPanel(WORKING, 64f, workColor);
 
         JPanel panel = FormBuilder.create()
                 .columns("p:grow, 5dlu, p:grow")
