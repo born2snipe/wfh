@@ -1,4 +1,4 @@
-package wfh.gui;
+package wfh.gui.lnf;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;

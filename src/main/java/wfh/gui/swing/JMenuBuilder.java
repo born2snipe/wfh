@@ -1,5 +1,6 @@
-package wfh.gui;
+package wfh.gui.swing;
 
+import wfh.gui.lnf.ChangeLookAndFeelAction;
 import wfh.settings.SettingsRepository;
 
 import javax.swing.ButtonGroup;

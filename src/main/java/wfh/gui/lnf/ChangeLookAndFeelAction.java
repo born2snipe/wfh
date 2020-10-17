@@ -1,4 +1,4 @@
-package wfh.gui;
+package wfh.gui.lnf;
 
 import wfh.settings.SettingsRepository;
 

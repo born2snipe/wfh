@@ -12,7 +12,7 @@ import wfh.settings.SettingsRepository;
 
 import javax.swing.JMenu;
 
-import static wfh.gui.JMenuBuilder.newMenu;
+import static wfh.gui.swing.JMenuBuilder.newMenu;
 
 @Configuration
 public class DefaultMenuConfig {
