@@ -84,7 +84,7 @@ public class JsonFileSettingsRepository implements SettingsRepository {
 
     private void saveChangesToDisk() {
         try (OutputStream output = new FileOutputStream(settingsFile)) {
-            objectMapper.writeValue(output, currentSettings);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(output, currentSettings);
         } catch (IOException e) {
             logger.error("Failed to write settings to disk", e);
         }
