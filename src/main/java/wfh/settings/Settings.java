@@ -2,7 +2,6 @@ package wfh.settings;
 
 public class Settings {
     private boolean useDarkTheme = true;
-    private String lookAndFeelClassName;
     private StatusSetting afk;
     private StatusSetting lunch;
     private StatusSetting work;
@@ -13,14 +12,6 @@ public class Settings {
 
     public void setUseDarkTheme(boolean useDarkTheme) {
         this.useDarkTheme = useDarkTheme;
-    }
-
-    public String getLookAndFeelClassName() {
-        return lookAndFeelClassName;
-    }
-
-    public void setLookAndFeelClassName(String lookAndFeelClassName) {
-        this.lookAndFeelClassName = lookAndFeelClassName;
     }
 
     public StatusSetting getAfk() {
