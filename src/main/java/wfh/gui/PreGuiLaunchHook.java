@@ -2,7 +2,7 @@ package wfh.gui;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import wfh.gui.lnf.LookAndFeelApplier;
+import wfh.gui.theme.LookAndFeelApplier;
 import wfh.settings.SettingsRepository;
 
 @Component

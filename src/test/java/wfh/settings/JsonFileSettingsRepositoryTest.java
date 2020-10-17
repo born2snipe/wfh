@@ -2,10 +2,10 @@ package wfh.settings;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -48,20 +48,10 @@ class JsonFileSettingsRepositoryTest {
         JsonFileSettingsRepository repo = new JsonFileSettingsRepository(temp);
         repo.init();
 
-        repo.saveLookAndFeel(NimbusLookAndFeel.class);
+        repo.saveToUseDarkTheme(false);
 
-        assertThat(NimbusLookAndFeel.class, is(repo.findLookAndFeel()));
-        assertThat(NimbusLookAndFeel.class.getName(), is(readFileProperty(settings, "lookAndFeelClassName")));
-    }
-
-    @Test
-    public void bad_look_and_feel_in_file(@TempDir File temp) {
-        writeSettingFile(temp, "{\"lookAndFeelClassName\": \"class.does.not.exist\"}");
-
-        JsonFileSettingsRepository repo = new JsonFileSettingsRepository(temp);
-        repo.init();
-
-        assertThat(FlatDarculaLaf.class, is(repo.findLookAndFeel()));
+        assertThat(FlatIntelliJLaf.class, is(repo.findLookAndFeel()));
+        assertThat(false, is((boolean) readFileProperty(settings, "useDarkTheme")));
     }
 
     @Test
@@ -70,7 +60,7 @@ class JsonFileSettingsRepositoryTest {
         writeSettingFile(temp, "{}");
         repo.init();
 
-        assertThat(FlatDarculaLaf.class, is(repo.findLookAndFeel()));
+        assertThat(repo.findLookAndFeel(), is(FlatDarculaLaf.class));
     }
 
     @Test
@@ -113,10 +103,10 @@ class JsonFileSettingsRepositoryTest {
         assertThat(wfh.isDirectory(), is(true));
     }
 
-    private String readFileProperty(File settings, String propertyName) {
+    private <T> T readFileProperty(File settings, String propertyName) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            return (String) mapper.readValue(settings, HashMap.class).get(propertyName);
+            return (T) mapper.readValue(settings, HashMap.class).get(propertyName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,5 +1,5 @@
 {
-  "lookAndFeelClassName": "com.formdev.flatlaf.FlatDarculaLaf",
+  "useDarkTheme": true,
   "afk": {
     "color": "#B2B200"
   },

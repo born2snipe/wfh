@@ -1,7 +1,7 @@
 package wfh.gui.swing;
 
-import wfh.gui.lnf.ChangeLookAndFeelAction;
 import wfh.gui.status.StatusAction;
+import wfh.gui.theme.ChangeThemeAction;
 import wfh.settings.SettingsRepository;
 import wfh.status.StatusTracker;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class JMenuBuilder {
-    private static final String LNF_BUTTON_GROUP = UUID.randomUUID().toString();
+    private static final String THEME_BUTTON_GROUP = UUID.randomUUID().toString();
     private static final String STATUS_BUTTON_GROUP = UUID.randomUUID().toString();
     private final JMenu menu;
     private final Map<String, ButtonGroup> nameToButtonGroup = new HashMap<>();
@@ -34,11 +34,11 @@ public class JMenuBuilder {
         return menu;
     }
 
-    public JMenuBuilder addChangeLookAndFeelItem(Class lookAndFeelClass, SettingsRepository settingsRepository) {
-        JRadioButtonMenuItem item = new JRadioButtonMenuItem(lookAndFeelClass.getSimpleName());
-        item.setSelected(settingsRepository.findLookAndFeel().equals(lookAndFeelClass));
-        item.addActionListener(new ChangeLookAndFeelAction(lookAndFeelClass, settingsRepository));
-        return addToButtonGroup(LNF_BUTTON_GROUP, item);
+    public JMenuBuilder addChangeThemeItem(boolean useDarkTheme, String text, SettingsRepository settingsRepository) {
+        JRadioButtonMenuItem item = new JRadioButtonMenuItem(text);
+        item.setSelected(useDarkTheme == settingsRepository.useDarkTheme());
+        item.addActionListener(new ChangeThemeAction(useDarkTheme, settingsRepository));
+        return addToButtonGroup(THEME_BUTTON_GROUP, item);
     }
 
     public JMenuBuilder addToButtonGroup(String buttonGroupName, JRadioButtonMenuItem item) {

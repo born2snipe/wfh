@@ -2,6 +2,7 @@ package wfh.settings;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,16 +32,8 @@ public class JsonFileSettingsRepository implements SettingsRepository {
     }
 
     @Override
-    public void saveLookAndFeel(Class lookAndFeelClass) {
-        currentSettings.setLookAndFeelClassName(lookAndFeelClass.getName());
-        saveChangesToDisk();
-    }
-
-    @Override
     public Class findLookAndFeel() {
-        return Optional.ofNullable(currentSettings.getLookAndFeelClassName())
-                .map(this::loadClass)
-                .orElse(FlatDarculaLaf.class);
+        return currentSettings.isUseDarkTheme() ? FlatDarculaLaf.class : FlatIntelliJLaf.class;
     }
 
     @Override
@@ -59,6 +52,17 @@ public class JsonFileSettingsRepository implements SettingsRepository {
                 return safelyGetColorFor(currentSettings.getLunch(), Color.GREEN.darker());
         }
         return Color.WHITE;
+    }
+
+    @Override
+    public void saveToUseDarkTheme(boolean useDarkTheme) {
+        currentSettings.setUseDarkTheme(useDarkTheme);
+        saveChangesToDisk();
+    }
+
+    @Override
+    public boolean useDarkTheme() {
+        return currentSettings.isUseDarkTheme();
     }
 
     @PostConstruct

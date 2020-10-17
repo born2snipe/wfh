@@ -1,9 +1,5 @@
 package wfh.gui;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -42,12 +38,14 @@ public class MenuConfig {
 
     @Order(Integer.MAX_VALUE)
     @Bean
-    public JMenu lookAndFeelMenu(@Value("${theme.menu.title}") String menuTitle, SettingsRepository settingsRepository) {
+    public JMenu lookAndFeelMenu(
+            @Value("${theme.menu.title}") String menuTitle,
+            @Value("${theme.menu.dark.title}") String darkTitle,
+            @Value("${theme.menu.light.title}") String lightTitle,
+            SettingsRepository settingsRepository) {
         return newMenu(menuTitle)
-                .addChangeLookAndFeelItem(FlatLightLaf.class, settingsRepository)
-                .addChangeLookAndFeelItem(FlatDarkLaf.class, settingsRepository)
-                .addChangeLookAndFeelItem(FlatIntelliJLaf.class, settingsRepository)
-                .addChangeLookAndFeelItem(FlatDarculaLaf.class, settingsRepository)
+                .addChangeThemeItem(true, darkTitle, settingsRepository)
+                .addChangeThemeItem(false, lightTitle, settingsRepository)
                 .build();
     }
 }
