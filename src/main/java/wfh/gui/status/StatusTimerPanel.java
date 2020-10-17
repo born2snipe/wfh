@@ -1,10 +1,13 @@
 package wfh.gui.status;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import wfh.status.CannedActions;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -13,17 +16,17 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class StatusTimerPanel extends JPanel {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StatusTimerPanel.class);
     private static Font clockFont;
 
     static {
         try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("alarm clock.ttf")) {
             clockFont = Font.createFont(Font.TRUETYPE_FONT, input);
         } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to read custom font from the JAR", e);
         }
     }
 
-    private final long start = System.currentTimeMillis();
     private JLabel elapsedTime;
 
     public StatusTimerPanel(CannedActions cannedAction, float fontSize, Color fontColor) {
@@ -34,5 +37,9 @@ public class StatusTimerPanel extends JPanel {
         setBorder(BorderFactory.createTitledBorder(cannedAction.name()));
         setLayout(new BorderLayout());
         add(elapsedTime, BorderLayout.CENTER);
+    }
+
+    public void setElapsedTime(long elapsedTime) {
+        SwingUtilities.invokeLater(() -> this.elapsedTime.setText(ElapsedTimeFormatter.format(elapsedTime)));
     }
 }
