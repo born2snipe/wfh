@@ -10,8 +10,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static wfh.status.Statuses.DONE_FOR_THE_DAY;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,6 +25,15 @@ class StatusTrackerTest {
     void setUp() {
         tracker = new StatusTracker(currentStatusAccessor, Arrays.asList(listener));
         tracker.init();
+    }
+
+    @Test
+    public void changeStatusTo_does_NOT_notifies_listener_when_the_old_and_new_status_are_the_same() {
+        tracker.changeStatusTo("NEW_STATUS");
+        tracker.changeStatusTo("NEW_STATUS");
+
+        verify(listener).statusChanged(DONE_FOR_THE_DAY.name(), "NEW_STATUS");
+        verifyNoMoreInteractions(listener);
     }
 
     @Test

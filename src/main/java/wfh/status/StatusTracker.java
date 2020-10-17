@@ -25,12 +25,12 @@ public class StatusTracker {
     }
 
     public void changeStatusTo(String newStatus) {
-        // todo - can not change status to what it already is
-
-        for (StatusChangedListener listener : listeners) {
-            listener.statusChanged(currentStatus, newStatus);
+        if (!currentStatus.equals(newStatus)) {
+            for (StatusChangedListener listener : listeners) {
+                listener.statusChanged(currentStatus, newStatus);
+            }
+            currentStatus = newStatus;
         }
-        currentStatus = newStatus;
     }
 
     public String getCurrentStatus() {
