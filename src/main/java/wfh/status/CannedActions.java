@@ -1,4 +1,4 @@
-package wfh.gui.status;
+package wfh.status;
 
 public enum CannedActions {
     BACK_TO_WORK,

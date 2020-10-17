@@ -1,5 +1,7 @@
 package wfh.gui.status;
 
+import wfh.status.StatusTracker;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import java.awt.event.ActionEvent;
@@ -21,5 +23,9 @@ public class StatusAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         statusTracker.changeStatusTo(name);
+    }
+
+    public String getName() {
+        return name;
     }
 }

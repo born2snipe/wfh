@@ -3,6 +3,7 @@ package wfh.gui.swing;
 import wfh.gui.lnf.ChangeLookAndFeelAction;
 import wfh.gui.status.StatusAction;
 import wfh.settings.SettingsRepository;
+import wfh.status.StatusTracker;
 
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -62,8 +63,12 @@ public class JMenuBuilder {
         return this;
     }
 
-    public JMenuBuilder addStatusItems(List<StatusAction> actions) {
-        actions.forEach((action) -> addToButtonGroup(STATUS_BUTTON_GROUP, new JRadioButtonMenuItem(action)));
+    public JMenuBuilder addStatusItems(List<StatusAction> actions, StatusTracker statusTracker) {
+        actions.forEach((action) -> {
+            JRadioButtonMenuItem item = new JRadioButtonMenuItem(action);
+            item.setSelected(statusTracker.getCurrentStatus().equals(action.getName()));
+            addToButtonGroup(STATUS_BUTTON_GROUP, item);
+        });
         return this;
     }
 }

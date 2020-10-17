@@ -12,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import wfh.gui.status.StatusAction;
 import wfh.gui.swing.JMenuBuilder;
 import wfh.settings.SettingsRepository;
+import wfh.status.StatusTracker;
 
 import javax.swing.JMenu;
 import java.util.List;
@@ -26,13 +27,14 @@ public class MenuConfig {
     public JMenu statusActions(
             @Value("${status.menu.title}") String menuTitle,
             @Qualifier("cannedStatusActions") List<StatusAction> cannedActions,
-            @Qualifier("customStatusActions") List<StatusAction> customActions
+            @Qualifier("customStatusActions") List<StatusAction> customActions,
+            StatusTracker statusTracker
     ) {
         JMenuBuilder builder = newMenu(menuTitle)
-                .addStatusItems(cannedActions);
+                .addStatusItems(cannedActions, statusTracker);
 
         if (customActions.size() > 0) {
-            builder.addSeparator().addStatusItems(customActions);
+            builder.addSeparator().addStatusItems(customActions, statusTracker);
         }
 
         return builder.build();

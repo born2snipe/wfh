@@ -1,6 +1,6 @@
 package wfh.settings;
 
-import wfh.gui.status.CannedActions;
+import wfh.status.CannedActions;
 
 import java.util.Optional;
 

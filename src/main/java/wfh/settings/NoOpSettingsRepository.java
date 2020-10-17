@@ -2,7 +2,7 @@ package wfh.settings;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import org.springframework.stereotype.Repository;
-import wfh.gui.status.CannedActions;
+import wfh.status.CannedActions;
 
 import java.util.Optional;
 
