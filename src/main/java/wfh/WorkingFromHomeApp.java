@@ -1,18 +1,20 @@
 package wfh;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import wfh.gui.MainWindow;
+import wfh.gui.PreGuiLaunchHook;
 
 import javax.swing.SwingUtilities;
 
 @SpringBootApplication
 public class WorkingFromHomeApp {
+    public static MainWindow WINDOW;
+
     public static void main(String[] args) {
-        FlatLightLaf.install(new FlatDarculaLaf());
+        FlatLightLaf.install();
 
         ConfigurableApplicationContext context = new SpringApplicationBuilder(WorkingFromHomeApp.class)
                 .headless(false)
@@ -20,6 +22,9 @@ public class WorkingFromHomeApp {
 
         SwingUtilities.invokeLater(() -> {
             MainWindow window = context.getBean(MainWindow.class);
+            PreGuiLaunchHook hook = context.getBean(PreGuiLaunchHook.class);
+            WINDOW = window;
+            hook.execute(window);
             window.setVisible(true);
         });
     }
