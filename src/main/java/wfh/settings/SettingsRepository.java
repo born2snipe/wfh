@@ -9,9 +9,5 @@ public interface SettingsRepository {
 
     Class findLookAndFeel();
 
-    String getLocale();
-
-    void setLocale(String locale);
-
     Optional<String> findHotKeyFor(CannedActions cannedAction);
 }
