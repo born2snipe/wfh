@@ -12,13 +12,14 @@ import java.util.List;
 @Configuration
 public class StatusActionsConfig {
     @Bean
-    public List<StatusAction> cannedStatusActions(SettingsRepository settingsRepository, Environment env) {
+    public List<StatusAction> cannedStatusActions(SettingsRepository settingsRepository, Environment env, StatusTracker statusTracker) {
         ArrayList<StatusAction> actions = new ArrayList<>();
         for (CannedActions cannedAction : CannedActions.values()) {
             actions.add(new StatusAction(
+                    cannedAction.name(),
                     env.getProperty("status.item." + cannedAction.name()),
                     settingsRepository.findHotKeyFor(cannedAction),
-                    settingsRepository.findTaskFor(cannedAction)
+                    statusTracker
             ));
         }
 

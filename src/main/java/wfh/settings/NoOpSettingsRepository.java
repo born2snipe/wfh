@@ -3,8 +3,6 @@ package wfh.settings;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import org.springframework.stereotype.Repository;
 import wfh.gui.status.CannedActions;
-import wfh.gui.status.NoOpTask;
-import wfh.gui.status.StatusActionTask;
 
 import java.util.Optional;
 
@@ -33,10 +31,5 @@ public class NoOpSettingsRepository implements SettingsRepository {
     @Override
     public Optional<String> findHotKeyFor(CannedActions cannedAction) {
         return Optional.empty();
-    }
-
-    @Override
-    public StatusActionTask findTaskFor(CannedActions cannedAction) {
-        return new NoOpTask();
     }
 }
