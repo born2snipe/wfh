@@ -53,7 +53,7 @@ public class MainWindow extends JFrame {
         getContentPane().add(panel, BorderLayout.CENTER);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(300, 230);
+        pack();
         setResizable(false);
         setLocationByPlatform(true);
     }
