@@ -1,5 +1,6 @@
 package wfh.gui.status;
 
+import wfh.status.Status;
 import wfh.status.StatusTracker;
 
 import javax.swing.AbstractAction;
@@ -10,11 +11,11 @@ import java.util.Optional;
 import static javax.swing.KeyStroke.getKeyStroke;
 
 public class StatusAction extends AbstractAction {
-    private String name;
+    private Status status;
     private StatusTracker statusTracker;
 
-    public StatusAction(String name, String menuText, Optional<String> hotKey, StatusTracker statusTracker) {
-        this.name = name;
+    public StatusAction(Status status, String menuText, Optional<String> hotKey, StatusTracker statusTracker) {
+        this.status = status;
         this.statusTracker = statusTracker;
         putValue(Action.NAME, menuText);
         hotKey.ifPresent((hk) -> putValue(Action.ACCELERATOR_KEY, getKeyStroke(hk)));
@@ -22,10 +23,10 @@ public class StatusAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        statusTracker.changeStatusTo(name);
+        statusTracker.changeStatusTo(status);
     }
 
-    public String getName() {
-        return name;
+    public Status getStatus() {
+        return status;
     }
 }

@@ -6,14 +6,14 @@ import org.springframework.core.env.Environment;
 import wfh.settings.SettingsRepository;
 import wfh.status.StatusTracker;
 
-import static wfh.status.Statuses.*;
+import static wfh.status.Status.*;
 
 @Configuration
 public class StatusActionConfig {
     @Bean
     public StatusAction afkAction(SettingsRepository settingsRepository, Environment env, StatusTracker statusTracker) {
         return new StatusAction(
-                AFK.name(),
+                AFK,
                 env.getProperty("status.item.AFK"),
                 settingsRepository.findHotKeyFor(AFK),
                 statusTracker
@@ -23,7 +23,7 @@ public class StatusActionConfig {
     @Bean
     public StatusAction lunchAction(SettingsRepository settingsRepository, Environment env, StatusTracker statusTracker) {
         return new StatusAction(
-                LUNCH.name(),
+                LUNCH,
                 env.getProperty("status.item.LUNCH"),
                 settingsRepository.findHotKeyFor(LUNCH),
                 statusTracker
@@ -33,7 +33,7 @@ public class StatusActionConfig {
     @Bean
     public StatusAction workingAction(SettingsRepository settingsRepository, Environment env, StatusTracker statusTracker) {
         return new StatusAction(
-                WORKING.name(),
+                WORKING,
                 env.getProperty("status.item.WORKING"),
                 settingsRepository.findHotKeyFor(WORKING),
                 statusTracker
@@ -43,7 +43,7 @@ public class StatusActionConfig {
     @Bean
     public StatusAction doneForTheDayAction(SettingsRepository settingsRepository, Environment env, StatusTracker statusTracker) {
         return new StatusAction(
-                DONE_FOR_THE_DAY.name(),
+                DONE_FOR_THE_DAY,
                 env.getProperty("status.item.DONE_FOR_THE_DAY"),
                 settingsRepository.findHotKeyFor(DONE_FOR_THE_DAY),
                 statusTracker

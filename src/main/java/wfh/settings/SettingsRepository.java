@@ -1,6 +1,6 @@
 package wfh.settings;
 
-import wfh.status.Statuses;
+import wfh.status.Status;
 
 import java.awt.Color;
 import java.util.Optional;
@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface SettingsRepository {
     Class findLookAndFeel();
 
-    Optional<String> findHotKeyFor(Statuses cannedAction);
+    Optional<String> findHotKeyFor(Status cannedAction);
 
-    Color findStatusColorFor(Statuses action);
+    Color findStatusColorFor(Status action);
 
     void saveToUseDarkTheme(boolean useDarkTheme);
 

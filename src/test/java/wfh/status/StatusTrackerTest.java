@@ -11,7 +11,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static wfh.status.Statuses.DONE_FOR_THE_DAY;
+import static wfh.status.Status.AFK;
+import static wfh.status.Status.DONE_FOR_THE_DAY;
 
 @ExtendWith(MockitoExtension.class)
 class StatusTrackerTest {
@@ -29,40 +30,40 @@ class StatusTrackerTest {
 
     @Test
     public void changeStatusTo_does_NOT_notifies_listener_when_the_old_and_new_status_are_the_same() {
-        tracker.changeStatusTo("NEW_STATUS");
-        tracker.changeStatusTo("NEW_STATUS");
+        tracker.changeStatusTo(AFK);
+        tracker.changeStatusTo(AFK);
 
-        verify(listener).statusChanged(DONE_FOR_THE_DAY.name(), "NEW_STATUS");
+        verify(listener).statusChanged(DONE_FOR_THE_DAY, AFK);
         verifyNoMoreInteractions(listener);
     }
 
     @Test
     public void changeStatusTo_notifies_listener() {
-        tracker.changeStatusTo("NEW_STATUS");
+        tracker.changeStatusTo(AFK);
 
-        verify(listener).statusChanged(DONE_FOR_THE_DAY.name(), "NEW_STATUS");
+        verify(listener).statusChanged(DONE_FOR_THE_DAY, AFK);
     }
 
     @Test
     public void changeStatusTo_to_a_new_status() {
-        tracker.changeStatusTo("NEW_STATUS");
+        tracker.changeStatusTo(AFK);
 
-        assertEquals("NEW_STATUS", tracker.getCurrentStatus());
+        assertEquals(AFK, tracker.getCurrentStatus());
     }
 
     @Test
     public void init_status_provided() {
-        when(currentStatusAccessor.findCurrentStatus()).thenReturn(Optional.of("status"));
+        when(currentStatusAccessor.findCurrentStatus()).thenReturn(Optional.of(AFK));
 
         tracker.init();
 
-        assertEquals("status", tracker.getCurrentStatus());
+        assertEquals(AFK, tracker.getCurrentStatus());
     }
 
     @Test
     public void init_did_not_determine_status() {
         tracker.init();
 
-        assertEquals(DONE_FOR_THE_DAY.name(), tracker.getCurrentStatus());
+        assertEquals(DONE_FOR_THE_DAY, tracker.getCurrentStatus());
     }
 }

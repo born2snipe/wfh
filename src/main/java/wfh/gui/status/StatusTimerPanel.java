@@ -2,7 +2,7 @@ package wfh.gui.status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import wfh.status.Statuses;
+import wfh.status.Status;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -29,7 +29,7 @@ public class StatusTimerPanel extends JPanel {
 
     private JLabel elapsedTime;
 
-    public StatusTimerPanel(Statuses cannedAction, float fontSize, Color fontColor) {
+    public StatusTimerPanel(Status cannedAction, float fontSize, Color fontColor) {
         elapsedTime = new JLabel("00:00:00");
         elapsedTime.setFont(clockFont.deriveFont(fontSize));
         elapsedTime.setForeground(fontColor);

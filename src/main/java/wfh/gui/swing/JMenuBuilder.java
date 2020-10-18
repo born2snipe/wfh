@@ -70,7 +70,7 @@ public class JMenuBuilder {
 
     public JMenuBuilder addStatusItem(StatusAction action, StatusTracker statusTracker) {
         JRadioButtonMenuItem item = new JRadioButtonMenuItem(action);
-        item.setSelected(statusTracker.getCurrentStatus().equals(action.getName()));
+        item.setSelected(statusTracker.getCurrentStatus().equals(action.getStatus()));
         addToButtonGroup(STATUS_BUTTON_GROUP, item);
         return this;
     }

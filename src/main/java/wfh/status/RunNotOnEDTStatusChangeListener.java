@@ -27,9 +27,9 @@ public abstract class RunNotOnEDTStatusChangeListener implements StatusChangedLi
     }
 
     @Override
-    public final void statusChanged(String previousStatus, String newStatus) {
+    public final void statusChanged(Status previousStatus, Status newStatus) {
         EXECUTOR_SERVICE.submit(() -> performStatusChange(previousStatus, newStatus));
     }
 
-    protected abstract void performStatusChange(String previousStatus, String newStatus);
+    protected abstract void performStatusChange(Status previousStatus, Status newStatus);
 }

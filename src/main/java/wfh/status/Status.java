@@ -1,6 +1,6 @@
 package wfh.status;
 
-public enum Statuses {
+public enum Status {
     WORKING,
     AFK,
     LUNCH,

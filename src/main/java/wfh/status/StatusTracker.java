@@ -6,11 +6,11 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-import static wfh.status.Statuses.DONE_FOR_THE_DAY;
+import static wfh.status.Status.DONE_FOR_THE_DAY;
 
 @Component
 public class StatusTracker {
-    private String currentStatus;
+    private Status currentStatus;
     private final CurrentStatusAccessor currentStatusAccessor;
     private final ArrayList<StatusChangedListener> listeners = new ArrayList<>();
 
@@ -21,10 +21,10 @@ public class StatusTracker {
 
     @PostConstruct
     public void init() {
-        currentStatus = currentStatusAccessor.findCurrentStatus().orElse(DONE_FOR_THE_DAY.name());
+        currentStatus = currentStatusAccessor.findCurrentStatus().orElse(DONE_FOR_THE_DAY);
     }
 
-    public void changeStatusTo(String newStatus) {
+    public void changeStatusTo(Status newStatus) {
         if (!currentStatus.equals(newStatus)) {
             for (StatusChangedListener listener : listeners) {
                 listener.statusChanged(currentStatus, newStatus);
@@ -33,7 +33,7 @@ public class StatusTracker {
         }
     }
 
-    public String getCurrentStatus() {
+    public Status getCurrentStatus() {
         return currentStatus;
     }
 }

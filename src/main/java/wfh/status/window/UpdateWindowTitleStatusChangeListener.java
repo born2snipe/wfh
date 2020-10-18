@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import wfh.WorkingFromHomeApp;
 import wfh.gui.MainWindow;
+import wfh.status.Status;
 import wfh.status.StatusChangedListener;
 
 @Component
@@ -15,7 +16,7 @@ public class UpdateWindowTitleStatusChangeListener implements StatusChangedListe
     }
 
     @Override
-    public void statusChanged(String previousStatus, String newStatus) {
+    public void statusChanged(Status previousStatus, Status newStatus) {
         MainWindow window = WorkingFromHomeApp.WINDOW;
         window.setTitle(title + " - " + newStatus);
     }

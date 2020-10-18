@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import wfh.status.Statuses;
+import wfh.status.Status;
 
 import javax.annotation.PostConstruct;
 import java.awt.Color;
@@ -37,12 +37,12 @@ public class JsonFileSettingsRepository implements SettingsRepository {
     }
 
     @Override
-    public Optional<String> findHotKeyFor(Statuses cannedAction) {
+    public Optional<String> findHotKeyFor(Status cannedAction) {
         return Optional.empty();
     }
 
     @Override
-    public Color findStatusColorFor(Statuses action) {
+    public Color findStatusColorFor(Status action) {
         switch (action) {
             case AFK:
                 return safelyGetColorFor(currentSettings.getAfk(), Color.YELLOW.darker());
