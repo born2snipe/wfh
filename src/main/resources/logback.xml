@@ -23,12 +23,29 @@
         </encoder>
     </appender>
 
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.home}/.wfh/logs/app.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.home}/.wfh/audit/app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>14</maxHistory>
+            <maxFileSize>10MB</maxFileSize>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+
+    </appender>
+
     <logger name="wfh.status.log.LoggingStatusChangeListener" level="INFO" additivity="false">
         <appender-ref ref="AUDIT-FILE"/>
     </logger>
 
     <root level="ERROR">
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
     </root>
 
 </configuration>
