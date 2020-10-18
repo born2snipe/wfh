@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class WorkDay {
@@ -47,5 +48,11 @@ public class WorkDay {
 
     public void setStatusChanges(List<StatusChange> statusChanges) {
         this.statusChanges = statusChanges;
+    }
+
+    public Optional<StatusChange> getMostRecentUnfinishedStatusChange() {
+        return statusChanges.stream()
+                .filter((s) -> s.getStop() == null)
+                .findFirst();
     }
 }
