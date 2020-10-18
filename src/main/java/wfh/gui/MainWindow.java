@@ -4,8 +4,10 @@ import com.jgoodies.forms.builder.FormBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import wfh.gui.status.StatusTimerPanel;
 import wfh.settings.SettingsRepository;
+import wfh.status.time.WorkDayRepository;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -14,6 +16,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.time.LocalDate;
 import java.util.List;
 
 import static wfh.status.Status.*;
@@ -23,11 +26,11 @@ public class MainWindow extends JFrame {
     private final StatusTimerPanel afk;
     private final StatusTimerPanel lunch;
     private final StatusTimerPanel work;
+    private final WorkDayRepository workDayRepository;
 
-    private final long start = System.currentTimeMillis();
-
-    public MainWindow(@Value("${app.title}") String title, List<JMenu> menus, SettingsRepository settingsRepository) throws HeadlessException {
+    public MainWindow(@Value("${app.title}") String title, List<JMenu> menus, SettingsRepository settingsRepository, WorkDayRepository workDayRepository) throws HeadlessException {
         super(title);
+        this.workDayRepository = workDayRepository;
 
         JMenuBar menuBar = new JMenuBar();
         menus.forEach(menuBar::add);
@@ -58,14 +61,13 @@ public class MainWindow extends JFrame {
         setLocationByPlatform(true);
     }
 
+    @Transactional
     @Scheduled(fixedDelay = 100L)
     public void updateElapsedTimes() {
-        // todo - query for the real elapse times from the tracker
-
-        long now = System.currentTimeMillis();
-
-        afk.setElapsedTime(now - start);
-        lunch.setElapsedTime(now - start);
-        work.setElapsedTime(now - start);
+        workDayRepository.findByDay(LocalDate.now()).ifPresent((wd) -> {
+            afk.setElapsedTime(wd.calculateTime(AFK));
+            lunch.setElapsedTime(wd.calculateTime(LUNCH));
+            work.setElapsedTime(wd.calculateTime(WORKING));
+        });
     }
 }

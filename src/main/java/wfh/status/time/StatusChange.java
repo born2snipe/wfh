@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Optional;
 
 @Entity
 @Table(name = "work_day_status")
@@ -61,4 +63,10 @@ public class StatusChange {
         this.id = id;
     }
 
+    public long getElapsedTime() {
+        return Optional.ofNullable(stop)
+                .orElse(LocalDateTime.now())
+                .toInstant(ZoneOffset.UTC)
+                .toEpochMilli() - start.toInstant(ZoneOffset.UTC).toEpochMilli();
+    }
 }

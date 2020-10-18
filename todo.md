@@ -1,6 +1,6 @@
 ### Must haves:
-- [ ] Need a StatusChangeListener to record times
-- [ ] clocks need to query for the elapsed time 
+- [X] Need a StatusChangeListener to record times
+- [X] clocks need to query for the elapsed time 
 
 #### Nice to haves:
 - [ ] need a windows window icon

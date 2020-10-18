@@ -1,5 +1,7 @@
 package wfh.status.time;
 
+import wfh.status.Status;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,5 +56,12 @@ public class WorkDay {
         return statusChanges.stream()
                 .filter((s) -> s.getStop() == null)
                 .findFirst();
+    }
+
+    public long calculateTime(Status status) {
+        return statusChanges.stream()
+                .filter((sc) -> status.equals(sc.getStatus()))
+                .mapToLong(StatusChange::getElapsedTime)
+                .sum();
     }
 }
