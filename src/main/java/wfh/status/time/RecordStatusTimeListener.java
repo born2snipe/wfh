@@ -25,9 +25,11 @@ public class RecordStatusTimeListener implements StatusChangedListener {
         workDay.getMostRecentUnfinishedStatusChange()
                 .ifPresent((sc) -> sc.setStop(LocalDateTime.now()));
 
-        StatusChange statusChange = new StatusChange();
-        statusChange.setStatus(newStatus);
-        workDay.getStatusChanges().add(statusChange);
+        if (newStatus != Status.DONE_FOR_THE_DAY) {
+            StatusChange statusChange = new StatusChange();
+            statusChange.setStatus(newStatus);
+            workDay.getStatusChanges().add(statusChange);
+        }
 
         repository.save(workDay);
     }

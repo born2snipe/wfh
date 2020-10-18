@@ -35,6 +35,24 @@ class RecordStatusTimeListenerTest {
     }
 
     @Test
+    public void status_change_to_DONE_FOR_THE_DAY() {
+        StatusChange statusChange = new StatusChange();
+        statusChange.setStatus(AFK);
+
+        WorkDay existingWorkDay = new WorkDay();
+        existingWorkDay.getStatusChanges().add(statusChange);
+
+        when(repository.findByDay(now)).thenReturn(Optional.of(existingWorkDay));
+
+        listener.statusChanged(AFK, DONE_FOR_THE_DAY);
+
+        verify(repository).save(workDayCaptor.capture());
+
+        WorkDay workDay = workDayCaptor.getValue();
+        assertThat(workDay.getStatusChanges().size(), is(1));
+    }
+
+    @Test
     public void status_change_added_after_existing_finished() {
         StatusChange statusChange = new StatusChange();
         statusChange.setStatus(AFK);
