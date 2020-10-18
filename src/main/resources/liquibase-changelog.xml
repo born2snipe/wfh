@@ -36,4 +36,22 @@
         </createIndex>
     </changeSet>
 
+    <changeSet author="dudley" id="work-days-are-unique">
+        <addUniqueConstraint tableName="work_day" columnNames="day" constraintName="uq_day"/>
+    </changeSet>
+
+    <changeSet author="dudley" id="create-index-work-day-table">
+        <createIndex tableName="work_day" indexName="idx_day">
+            <column name="day"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="dudley" id="work-day-status-status-is-not-nullable">
+        <addNotNullConstraint tableName="work_day_status" columnName="status"/>
+    </changeSet>
+
+    <changeSet author="dudley" id="work-day-status-start-is-not-nullable">
+        <addNotNullConstraint tableName="work_day_status" columnName="start"/>
+    </changeSet>
+
 </databaseChangeLog>
