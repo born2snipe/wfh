@@ -1,0 +1,39 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="dudley" id="create-work-day-table">
+        <createTable tableName="work_day">
+            <column name="id" type="int" autoIncrement="true"/>
+            <column name="day" type="timestamp"/>
+        </createTable>
+
+        <addPrimaryKey tableName="work_day" columnNames="id"/>
+    </changeSet>
+
+    <changeSet author="dudley" id="create-work-day-status-table">
+        <createTable tableName="work_day_status">
+            <column name="id" type="int" autoIncrement="true"/>
+            <column name="work_day_id" type="int"/>
+            <column name="status" type="varchar(64)"/>
+            <column name="start" type="timestamp"/>
+            <column name="stop" type="timestamp"/>
+        </createTable>
+
+        <addPrimaryKey tableName="work_day_status" columnNames="id"/>
+        <addForeignKeyConstraint baseTableName="work_day_status"
+                                 baseColumnNames="work_day_id"
+                                 constraintName="fk_work_day_id"
+                                 referencedTableName="work_day"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet author="dudley" id="create-index-work-day-status-table">
+        <createIndex tableName="work_day_status" indexName="idx_work_day">
+            <column name="worK_day_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
