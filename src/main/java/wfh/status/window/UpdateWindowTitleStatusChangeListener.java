@@ -18,6 +18,10 @@ public class UpdateWindowTitleStatusChangeListener implements StatusChangedListe
     @Override
     public void statusChanged(Status previousStatus, Status newStatus) {
         MainWindow window = WorkingFromHomeApp.WINDOW;
-        window.setTitle(title + " - " + newStatus);
+        if (newStatus == Status.DONE_FOR_THE_DAY) {
+            window.setTitle(title);
+        } else {
+            window.setTitle(title + " - " + newStatus);
+        }
     }
 }
