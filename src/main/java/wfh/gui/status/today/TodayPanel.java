@@ -3,12 +3,12 @@ package wfh.gui.status.today;
 import com.jgoodies.forms.builder.FormBuilder;
 import wfh.gui.status.StatusTimerPanel;
 import wfh.settings.SettingsRepository;
-import wfh.status.time.WorkDayRepository;
+import wfh.status.time.TodayElapsedTimes;
+import wfh.status.time.WorkDayService;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.time.LocalDate;
 
 import static wfh.status.Status.*;
 
@@ -16,10 +16,10 @@ public class TodayPanel extends JPanel {
     private final StatusTimerPanel afk;
     private final StatusTimerPanel lunch;
     private final StatusTimerPanel work;
-    private final WorkDayRepository workDayRepository;
+    private final WorkDayService workDayService;
 
-    public TodayPanel(SettingsRepository settingsRepository, WorkDayRepository workDayRepository) {
-        this.workDayRepository = workDayRepository;
+    public TodayPanel(SettingsRepository settingsRepository, WorkDayService workDayService) {
+        this.workDayService = workDayService;
 
         Color afkColor = settingsRepository.findStatusColorFor(AFK);
         Color lunchColor = settingsRepository.findStatusColorFor(LUNCH);
@@ -42,11 +42,9 @@ public class TodayPanel extends JPanel {
     }
 
     public void updateElapsedTimes() {
-        // todo - need to reset back to zero if not present
-        workDayRepository.findByDay(LocalDate.now()).ifPresent((wd) -> {
-            afk.setElapsedTime(wd.calculateTime(AFK));
-            lunch.setElapsedTime(wd.calculateTime(LUNCH));
-            work.setElapsedTime(wd.calculateTime(WORKING));
-        });
+        TodayElapsedTimes times = workDayService.findElapsedTimesForToday();
+        afk.setElapsedTime(times.getAfk());
+        lunch.setElapsedTime(times.getLunch());
+        work.setElapsedTime(times.getWork());
     }
 }

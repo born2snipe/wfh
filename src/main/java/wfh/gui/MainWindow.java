@@ -6,8 +6,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import wfh.gui.status.today.TodayPanel;
+import wfh.gui.status.week.ThisWeekPanel;
 import wfh.settings.SettingsRepository;
-import wfh.status.time.WorkDayRepository;
+import wfh.status.time.WorkDayService;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -18,15 +19,15 @@ import java.util.List;
 
 @Component
 public class MainWindow extends JFrame {
-
     private TodayPanel todayPanel;
+    private ThisWeekPanel thisWeekPanel;
 
     @Autowired
     public MainWindow(
             @Value("${app.title}") String title,
             List<JMenu> menus,
             SettingsRepository settingsRepository,
-            WorkDayRepository workDayRepository
+            WorkDayService workDayService
     ) {
         super(title);
 
@@ -34,9 +35,12 @@ public class MainWindow extends JFrame {
         menus.forEach(menuBar::add);
         setJMenuBar(menuBar);
 
-        todayPanel = new TodayPanel(settingsRepository, workDayRepository);
+        todayPanel = new TodayPanel(settingsRepository, workDayService);
+        thisWeekPanel = new ThisWeekPanel(workDayService);
+
         JTabbedPane tabs = new JTabbedPane();
         tabs.addTab("Today", todayPanel);
+        tabs.addTab("Week", thisWeekPanel);
 
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(tabs, BorderLayout.CENTER);
@@ -51,5 +55,6 @@ public class MainWindow extends JFrame {
     @Scheduled(fixedRate = 10L)
     public void updateElapsedTimes() {
         todayPanel.updateElapsedTimes();
+        thisWeekPanel.updateElapsedTimes();
     }
 }
