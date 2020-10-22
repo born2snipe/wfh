@@ -39,7 +39,7 @@ public class WeekModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0:
-                return dayOfWeek.name();
+                return dayOfWeek.getShortName();
             case 1:
                 return format(times.getAfk());
             case 2:

@@ -16,6 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.List;
 
 import static wfh.status.Status.DONE_FOR_THE_DAY;
@@ -53,6 +54,7 @@ public class MainWindow extends JFrame {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(tabs, BorderLayout.CENTER);
 
+        setMinimumSize(new Dimension(350, 250));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setResizable(false);

@@ -1,5 +1,6 @@
 package wfh.gui.status.week;
 
+import com.jgoodies.forms.builder.FormBuilder;
 import wfh.status.time.Day;
 import wfh.status.time.TodayElapsedTimes;
 import wfh.status.time.WorkDayService;
@@ -9,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -23,8 +25,17 @@ public class ThisWeekPanel extends JPanel {
         JTable table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new Dimension(0, 200));
+
+        JPanel panel = FormBuilder.create()
+                .columns("5dlu, pref:grow, 5dlu")
+                .rows("5dlu, pref, 5dlu")
+                .add(scrollPane).xy(2, 2)
+                .build();
+
         setLayout(new BorderLayout());
-        add(new JScrollPane(table), BorderLayout.CENTER);
+        add(panel, BorderLayout.CENTER);
 
     }
 
