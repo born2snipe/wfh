@@ -23,6 +23,6 @@ class WorkDayServiceTest {
 
         LocalDate sunday = service.findSundayFrom(date);
 
-        assertEquals(date.minusDays(2), sunday);
+        assertEquals(LocalDate.of(2020, 10, 18), sunday);
     }
 }
