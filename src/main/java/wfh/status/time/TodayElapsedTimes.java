@@ -1,5 +1,7 @@
 package wfh.status.time;
 
+import java.util.Objects;
+
 public class TodayElapsedTimes {
     private final long afk;
     private final long lunch;
@@ -21,5 +23,20 @@ public class TodayElapsedTimes {
 
     public long getWork() {
         return work;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TodayElapsedTimes that = (TodayElapsedTimes) o;
+        return afk == that.afk &&
+                lunch == that.lunch &&
+                work == that.work;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(afk, lunch, work);
     }
 }

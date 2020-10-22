@@ -51,11 +51,31 @@ public class WeekModel extends AbstractTableModel {
         }
     }
 
-    public void setElapsedTimes(Map<Day, TodayElapsedTimes> elapsedTimesForWeek) {
+    public void setElapsedTimes(Map<Day, TodayElapsedTimes> updatedTimes) {
+        int lowestRowUpdated = -1;
+        int highestRowUpdated = -1;
+
         synchronized (dayToTimes) {
-            dayToTimes.clear();
-            dayToTimes.putAll(elapsedTimesForWeek);
+            for (int i = 0; i < Day.values().length; i++) {
+                Day day = Day.values()[i];
+
+                TodayElapsedTimes updated = updatedTimes.get(day);
+                TodayElapsedTimes existing = dayToTimes.get(day);
+                if (!updated.equals(existing)) {
+                    dayToTimes.put(day, updated);
+
+                    if (lowestRowUpdated == -1) {
+                        lowestRowUpdated = i;
+                        highestRowUpdated = i;
+                    } else if (highestRowUpdated < i) {
+                        highestRowUpdated = i;
+                    }
+                }
+            }
         }
-        fireTableDataChanged();
+
+        if (lowestRowUpdated >= 0) {
+            fireTableRowsUpdated(lowestRowUpdated, highestRowUpdated);
+        }
     }
 }
