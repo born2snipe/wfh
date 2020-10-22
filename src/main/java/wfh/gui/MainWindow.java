@@ -2,7 +2,6 @@ package wfh.gui;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import wfh.gui.status.today.TodayPanel;
@@ -61,7 +60,6 @@ public class MainWindow extends JFrame {
     }
 
     @Transactional(readOnly = true)
-    @Scheduled(fixedRate = 10L)
     public void updateElapsedTimes() {
         todayPanel.updateElapsedTimes();
         thisWeekPanel.updateElapsedTimes();
