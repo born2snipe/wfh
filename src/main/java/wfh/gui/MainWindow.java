@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import wfh.gui.status.today.TodayPanel;
 import wfh.gui.status.week.ThisWeekPanel;
 import wfh.settings.SettingsRepository;
+import wfh.status.CurrentStatusAccessor;
+import wfh.status.Status;
 import wfh.status.time.WorkDayService;
 
 import javax.swing.JFrame;
@@ -17,19 +19,26 @@ import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 import java.util.List;
 
+import static wfh.status.Status.DONE_FOR_THE_DAY;
+
 @Component
 public class MainWindow extends JFrame {
-    private TodayPanel todayPanel;
-    private ThisWeekPanel thisWeekPanel;
+    private final TodayPanel todayPanel;
+    private final ThisWeekPanel thisWeekPanel;
+    private final String title;
+    private final CurrentStatusAccessor currentStatusAccessor;
 
     @Autowired
     public MainWindow(
             @Value("${app.title}") String title,
             List<JMenu> menus,
             SettingsRepository settingsRepository,
-            WorkDayService workDayService
+            WorkDayService workDayService,
+            CurrentStatusAccessor currentStatusAccessor
     ) {
         super(title);
+        this.title = title;
+        this.currentStatusAccessor = currentStatusAccessor;
 
         JMenuBar menuBar = new JMenuBar();
         menus.forEach(menuBar::add);
@@ -56,5 +65,12 @@ public class MainWindow extends JFrame {
     public void updateElapsedTimes() {
         todayPanel.updateElapsedTimes();
         thisWeekPanel.updateElapsedTimes();
+
+        Status newStatus = currentStatusAccessor.findCurrentStatus().orElse(DONE_FOR_THE_DAY);
+        if (newStatus == DONE_FOR_THE_DAY) {
+            setTitle(title);
+        } else {
+            setTitle(title + " - " + newStatus);
+        }
     }
 }
