@@ -44,7 +44,7 @@ public class WorkDayService {
 
     public LocalDate findSundayFrom(LocalDate date) {
         Day today = Day.from(date.getDayOfWeek());
-        int daysToSubtract = today.ordinal() + 1;
-        return LocalDate.now().minusDays(daysToSubtract);
+        int daysToSubtract = today.ordinal();
+        return date.minusDays(daysToSubtract);
     }
 }
